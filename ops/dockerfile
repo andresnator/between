@@ -1,0 +1,27 @@
+FROM openjdk:11.0.15
+
+EXPOSE 5000
+RUN mkdir /opt/service
+
+COPY /application/*.jar /opt/service/app.jar
+
+ENV JDK_MAX_MEMORY="256m"
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
+    curl \
+    ca-certificates \
+    unzip \
+    wget \
+    curl \
+    xmlstarlet \
+    vim \
+    jq \
+    coreutils
+
+ADD docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+
+WORKDIR /opt/service
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
