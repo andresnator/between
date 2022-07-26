@@ -2,7 +2,6 @@ package tech.between.interview.core.usecases.products.impl;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tech.between.interview.core.entities.ProductDescription;
 import tech.between.interview.core.usecases.exceptions.UseCaseException;
@@ -16,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static tech.between.interview.configuration.cache.CacheConfig.SIMILAR_PRODUCT;
 
 @Service
 public class GetSimilarProductsImpl implements GetSimilarProducts {
@@ -36,7 +33,6 @@ public class GetSimilarProductsImpl implements GetSimilarProducts {
     }
 
     @Override
-    @Cacheable(SIMILAR_PRODUCT)
     public List<ProductDescription> apply(@NonNull final Integer productId) {
         final Set<Integer> similarIds = getSimilarIds.apply(productId);
 

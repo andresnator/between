@@ -1,6 +1,7 @@
 package tech.between.interview.configuration.cache;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
@@ -16,17 +17,19 @@ public class CacheConfig {
     public static final String DESCRIPTION_PRODUCT = "description_product";
     public static final String SIMILAR_PRODUCT_IDS = "similar_product_ids";
     public static final String SIMILAR_PRODUCT = "similar_product";
-    private static final int DESCRIPTION_PRODUCT_CACHE_MAX_SIZE = 30;
-    private static final int DESCRIPTION_PRODUCT_CACHE_DURATION = 10;
+    @Value("${cache.maximum.size}")
+    private int descriptionProductCacheMaxSize;
+    @Value("${cache.duration.minutes}")
+    private int descriptionProductCacheDuration;
     private static final TimeUnit TIME_UNIT = TimeUnit.MINUTES;
 
     @Bean
     public CacheManager cacheManager() {
         final CaffeineCacheManager cacheManager = new CaffeineCacheManager(DESCRIPTION_PRODUCT, SIMILAR_PRODUCT_IDS, SIMILAR_PRODUCT);
         cacheManager.setCaffeine(Caffeine.newBuilder()
-                .maximumSize(DESCRIPTION_PRODUCT_CACHE_MAX_SIZE)
+                .maximumSize(descriptionProductCacheMaxSize)
                 .recordStats()
-                .expireAfterAccess(DESCRIPTION_PRODUCT_CACHE_DURATION, TIME_UNIT));
+                .expireAfterAccess(descriptionProductCacheDuration, TIME_UNIT));
         return cacheManager;
     }
 }

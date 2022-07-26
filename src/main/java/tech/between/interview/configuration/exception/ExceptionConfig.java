@@ -31,7 +31,7 @@ public class ExceptionConfig {
             apiError = new ApiError(e.getCode(), e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
 
-        log.warn("Internal Api error", e);
+        log.error("Internal Api error", e);
         return ResponseEntity.status(apiError.getStatus()).body(apiError);
     }
 
