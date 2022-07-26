@@ -36,4 +36,5 @@ Se definieron 4 componentes principales:
 
 ## Operaciones
 
-En el directorio between/ops contiene los archivos que componen el contendor docker de la solución
+En el directorio between/ops contiene los archivos que componen el contendor docker de la solución.
+La imagen creada se encuentra en el repositorio https://hub.docker.com/repository/docker/andresnator/between
